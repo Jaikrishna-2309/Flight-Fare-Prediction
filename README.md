@@ -1,7 +1,7 @@
 # Flight Fare Prediction
 
 ## Objective
-Predict the fare of a flight by analyzing the past data.
+Predict the fare of a flight by analyzing the past data and using Machine Learning.
 
 ## Technologies
 - Python
