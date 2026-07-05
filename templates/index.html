@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Fare Prediction</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg p-4">
+
+        <h2 class="text-center mb-4">
+            ✈ Flight Fare Predictor
+        </h2>
+
+        <form action="/predict" method="POST">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Airline</label>
+                    <select name="Airline" class="form-select" required>
+
+    <option value="" disabled {% if not request.form.get('Airline') %}selected{% endif %}>Select Airline</option>
+
+    <option value="IndiGo" {% if request.form.get('Airline')=="IndiGo" %}selected{% endif %}>IndiGo</option>
+    <option value="Air India" {% if request.form.get('Airline')=="Air India" %}selected{% endif %}>Air India</option>
+    <option value="Jet Airways" {% if request.form.get('Airline')=="Jet Airways" %}selected{% endif %}>Jet Airways</option>
+    <option value="SpiceJet" {% if request.form.get('Airline')=="SpiceJet" %}selected{% endif %}>SpiceJet</option>
+    <option value="Vistara" {% if request.form.get('Airline')=="Vistara" %}selected{% endif %}>Vistara</option>
+    <option value="GoAir" {% if request.form.get('Airline')=="GoAir" %}selected{% endif %}>GoAir</option>
+    <option value="Multiple carriers" {% if request.form.get('Airline')=="Multiple carriers" %}selected{% endif %}>Multiple carriers</option>
+    <option value="Air Asia" {% if request.form.get('Airline')=="Air Asia" %}selected{% endif %}>Air Asia</option>
+    <option value="Jet Airways Business" {% if request.form.get('Airline')=="Jet Airways Business" %}selected{% endif %}>Jet Airways Business</option>
+    <option value="Vistara Premium economy" {% if request.form.get('Airline')=="Vistara Premium economy" %}selected{% endif %}>Vistara Premium economy</option>
+    <option value="Multiple carriers Premium economy" {% if request.form.get('Airline')=="Multiple carriers Premium economy" %}selected{% endif %}>Multiple carriers Premium economy</option>
+    <option value="Trujet" {% if request.form.get('Airline')=="Trujet" %}selected{% endif %}>Trujet</option>
+
+</select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Source</label>
+
+                    <select name="Source" class="form-select" required>
+
+    <option value="" disabled {% if not request.form.get('Source') %}selected{% endif %}>Select Source</option>
+
+    <option value="Delhi" {% if request.form.get('Source')=="Delhi" %}selected{% endif %}>Delhi</option>
+    <option value="Kolkata" {% if request.form.get('Source')=="Kolkata" %}selected{% endif %}>Kolkata</option>
+    <option value="Mumbai" {% if request.form.get('Source')=="Mumbai" %}selected{% endif %}>Mumbai</option>
+    <option value="Chennai" {% if request.form.get('Source')=="Chennai" %}selected{% endif %}>Chennai</option>
+    <option value="Banglore" {% if request.form.get('Source')=="Banglore" %}selected{% endif %}>Banglore</option>
+
+</select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">Destination</label>
+
+                    <select name="Destination" class="form-select" required>
+
+    <option value="" disabled {% if not request.form.get('Destination') %}selected{% endif %}>Select Destination</option>
+
+    <option value="Cochin" {% if request.form.get('Destination')=="Cochin" %}selected{% endif %}>Cochin</option>
+    <option value="Delhi" {% if request.form.get('Destination')=="Delhi" %}selected{% endif %}>Delhi</option>
+    <option value="New Delhi" {% if request.form.get('Destination')=="New Delhi" %}selected{% endif %}>New Delhi</option>
+    <option value="Hyderabad" {% if request.form.get('Destination')=="Hyderabad" %}selected{% endif %}>Hyderabad</option>
+    <option value="Kolkata" {% if request.form.get('Destination')=="Kolkata" %}selected{% endif %}>Kolkata</option>
+    <option value="Banglore" {% if request.form.get('Destination')=="Banglore" %}selected{% endif %}>Banglore</option>
+
+</select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">Journey Date</label>
+
+                   <input
+                    type="date"
+                    name="Journey_Date"
+                    class="form-control"
+                    value="{{ request.form.get('Journey_Date','') }}"
+                    required>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">Departure Time</label>
+
+                   <input
+                    type="time"
+                    name="Dep_Time"
+                    class="form-control"
+                    value="{{ request.form.get('Dep_Time','') }}"
+                    required>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">Arrival Time</label>
+
+                    <input
+                     type="time"
+                    name="Arrival_Time"
+                    class="form-control"
+                    value="{{ request.form.get('Arrival_Time','') }}"
+                    required>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">Duration Hours</label>
+
+                   <input
+                    type="number"
+                    name="Duration_Hours"
+                    class="form-control"
+                    min="0"
+                    value="{{ request.form.get('Duration_Hours','') }}"
+                    required
+>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">Duration Minutes</label>
+
+                    <input
+                        type="number"
+                        name="Duration_Minutes"
+                        class="form-control"
+                        min="0"
+                        max="59"
+                        value="{{ request.form.get('Duration_Minutes','') }}"
+                        required
+                    >
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">Total Stops</label>
+
+                   <select name="Total_Stops" class="form-select" required>
+
+                   <option value="" disabled {% if not request.form.get('Total_Stops') %}selected{% endif %}>Select Stops</option>
+
+                   <option value="0" {% if request.form.get('Total_Stops')=="0" %}selected{% endif %}>Non Stop</option>
+                   <option value="1" {% if request.form.get('Total_Stops')=="1" %}selected{% endif %}>1 Stop</option>
+                   <option value="2" {% if request.form.get('Total_Stops')=="2" %}selected{% endif %}>2 Stops</option>
+                   <option value="3" {% if request.form.get('Total_Stops')=="3" %}selected{% endif %}>3 Stops</option>
+                   <option value="4" {% if request.form.get('Total_Stops')=="4" %}selected{% endif %}>4 Stops</option>
+
+                </select>
+
+                </div>
+
+            </div>
+
+            <div class="text-center mt-3">
+
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Predict Fare
+                </button>
+
+               <button
+                   type="button"
+                   class="btn btn-secondary btn-lg ms-2"
+                   onclick="window.location.href='/'">
+                   Reset
+               </button>
+
+            </div>
+
+        </form>
+
+        {% if prediction %}
+
+        <div class="alert alert-success mt-4 text-center">
+
+            <h3>Predicted Fare</h3>
+
+            <h2>₹ {{ prediction }}</h2>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
